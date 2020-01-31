@@ -2,20 +2,21 @@
 
 <head>
     <script src="../js/jschannel.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    
 </head>
 
 <body>
-    <div id='div1' class="d-flex justify-content-end mt-5">
-        <iframe id="child1" src="child1.html"></iframe>
+    <div id='div1'>
+        <button id='createframe1' onclick=" new Child('div1','child1','child1.html')">Create Iframe</button>
     </div>
-    <div id='div2' class="d-flex justify-content-center">
-        <iframe id="child2" src="child2.html"></iframe>
+    <div id='div2'>
+        <button id='createframe2' onclick=" new Child('div2','child2','child2.html')">Create Iframe</button>
     </div>
 
 </body>
 <script src="../js/parent.js"></script>
+
+
 
 </html>

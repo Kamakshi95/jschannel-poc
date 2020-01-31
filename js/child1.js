@@ -21,8 +21,8 @@ var changeControlsVisibility = function (control, visible, buttonText) {
         method: 'sendMessageToParent',
         params: params,
         success: function () { },
-        error: function () {
-            console.log('controlsChange method error');
+        error: function (err) {
+            console.log(err);
         }
     });
 };

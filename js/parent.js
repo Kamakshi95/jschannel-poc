@@ -1,98 +1,73 @@
-var chan1 = Channel.build({
-    window: document.getElementById("child1").contentWindow,
-    origin: "*",
-    scope: "testScope",
-    onReady: function () {
-        console.log("channel1 is ready!");
+class Child {
+    constructor(containerID, iframeId, src) {
+        this.containerID = containerID;
+        this.iframeId = iframeId;
+        this.src = src;
+        this.createIframe(this.containerID, this.iframeId, this.src);
     }
-});
-
-var chan2 = Channel.build({
-    window: document.getElementById("child2").contentWindow,
-    origin: "*",
-    scope: "testScope",
-    onReady: function () {
-        console.log("channel2 is ready!");
+    createIframe(containerID, iframeId, src) {
+        var iframe = document.createElement("IFRAME");
+        iframe.setAttribute("id", iframeId);
+        iframe.setAttribute("src", src);
+        document.getElementById(containerID).appendChild(iframe);
+        $(iframe).on('load', () => {
+            console.log(this.iframeId+' loaded')
+            this.initChannel(this.iframeId)
+            .then((channel) => {
+                this.channel = channel;
+                this.bindChannel(this.containerID,this.iframeId)
+            });
+        })
     }
-});
+    initChannel(iframeId) {
+        return new Promise(function (resolve, reject) {
+            var channel = Channel.build({
+                window: document.getElementById(iframeId).contentWindow,
+                origin: '*',
+                scope:'testScope',
+                onReady: function () {
+                    console.log('channel ready')
+                    resolve(channel);
+                }
+            });
+        });
 
-function callChannel(channel, parameters) {
-    channel.call({
-        method: "receiveMessageFromParent",
-        params: parameters,
-        error: function (err) {
-            console.log(err);
-        }, 
-        success: function (data) {
-            console.log(data);
-        },
-    });
+    }
+    actionControl(parameters) {
+        this.channel.call({
+            method: "receiveMessageFromParent",
+            params: parameters,
+            error: function (err) {
+                console.log(err);
+            },
+            success: function (data) {
+                console.log('receiveMessageFromParent success');
+            },
+        });
+    }
+    bindChannel(containerID, id) {
+        this.channel.bind("sendMessageToParent",  (trans, params) =>{
+            if (params.type == 'controlsChange') {
+                if (params.data.visible == true) {
+                    var btn = document.createElement("BUTTON");
+                    btn.innerHTML = params.data.meta.buttonText;
+                    btn.setAttribute("id", params.data.meta.buttonText + id);
+                    btn.addEventListener('click',this.actionControl.bind(this,params.data.control));
+                    document.getElementById(containerID).appendChild(btn);
+                }
+                else {
+                    if ((params.data.meta.buttonText == 'check')&& (document.getElementById("check" + id))) {
+                        var element = document.getElementById("check" + id);
+                        element.parentNode.removeChild(element);
+
+                    }
+                    if ((params.data.meta.buttonText == 'Next')&& (document.getElementById("Next" + id))) {
+                        var element = document.getElementById("Next" + id);
+                        element.parentNode.removeChild(element);
+                    }
+                }
+            }
+        })
+    }
+
 }
-
-chan1.bind("sendMessageToParent", function (trans, params) {
-    if (params.type == 'controlsChange') {
-        if (params.data.visible == true) {
-            var btn = document.createElement("BUTTON");
-            btn.innerHTML = params.data.meta.buttonText;
-            btn.setAttribute("id", params.data.meta.buttonText + '1');
-            btn.setAttribute("onclick", 'actionChan1Control("' + params.data.control + '")');
-            document.getElementById('div1').appendChild(btn);
-        }
-        else {
-            if (params.data.meta.buttonText=='check') {
-                var element = document.getElementById("check1");
-                element.parentNode.removeChild(element);
-
-            }
-            if (params.data.meta.buttonText=='Next') {
-                var element = document.getElementById("Next1");
-                element.parentNode.removeChild(element);
-            }
-        }
-    }
-})
-
-
-chan2.bind("sendMessageToParent", function (trans, params) {
-    if (params.type == 'controlsChange') {
-        if (params.data.visible == true) {
-            var btn = document.createElement("BUTTON");
-            btn.innerHTML = params.data.meta.buttonText;
-            btn.setAttribute("id", params.data.meta.buttonText + '2');
-            btn.setAttribute("onclick", 'actionChan2Control("' + params.data.control + '")');
-            document.getElementById('div2').appendChild(btn);
-        }
-        else {
-            if (params.data.meta.buttonText=='check') {
-                var element = document.getElementById("check2");
-                element.parentNode.removeChild(element);
-
-            }
-            if (params.data.meta.buttonText=='Next') {
-                var element = document.getElementById("Next2");
-                element.parentNode.removeChild(element);
-            }
-        }
-    }
-})
-
-
-
-function actionChan1Control(control) {
-    callChannel(chan1, control)
-}
-
-function actionChan2Control(control) {
-    callChannel(chan2, control)
-}
-
-
-
-
-
-
-
-
-
-
-
