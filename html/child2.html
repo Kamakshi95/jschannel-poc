@@ -5,18 +5,22 @@
 <head>
 
     <script src="../js/jschannel.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
-
-<body>
-    <button onclick="displayCheck()">displayCheck</button>
-    <button onclick="hideCheck()">hideCheck</button>
-    <button onclick="displayNext()">displayNext</button>
-    <button onclick="hideNext()">hideNext</button>
-    <div id='childtext2'></div>
+<body class='h-100'>
+    <div class="d-flex justify-content-around  flex-column">
+        <div class="d-flex justify-content-around">
+            <button class='btn bg-info' onclick="displayCheck()">displayCheck</button>
+            <button  class='btn bg-info' onclick="hideCheck()">hideCheck</button>
+            <button  class='btn bg-info' onclick="displayNext()">displayNext</button>
+            <button class='btn bg-info' onclick="hideNext()">hideNext</button>
+        </div>
+        <div id='childtext2' class="text-white text-center bg-danger mt-auto fixed-bottom"></div>
+    </div>
     <script src="../js/child2.js"></script>
 </body>
 

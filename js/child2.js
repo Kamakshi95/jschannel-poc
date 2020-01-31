@@ -31,9 +31,14 @@ function BindChannel(action) {
     chan.bind("receiveMessageFromParent", action);
 }
 
+chan.bind("close", function(context, params) {
+    if (!context.origin) throw "where's your origin?";
+    chan.notify({method: "terminate", params: 'terminate'});
+  });
 
 BindChannel(function (trans, params) {
-    document.getElementById('childtext2').innerHTML = params
+    document.getElementById('childtext2').innerHTML = params;
+    document.getElementById('childtext2').classList.add('p-2')
 }
 )
 
