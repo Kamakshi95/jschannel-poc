@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <script src="../js/jschannel.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+        }
+    </style>
+
+</head>
+
+<body >
+    <div class='container h-100 pt-2'>
+        <div id='div1' class='d-flex justify-content-start flex-column h-50'>
+            <div>
+                <h6>Activity 1</h6>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+            </div>
+            <div class="d-flex justify-content-center mt-2"> 
+               <button id='createframe1' class='btn bg-secondary'
+                onclick=" new Child('div1','frame1','child1.html')">Create
+                Iframe 1</button>
+                <button id='removeframe1' class='btn bg-secondary'
+                >Remove
+                Iframe 1</button>
+            </div>
+        </div>
+        <div id='div2' class='d-flex justify-content-start flex-column h-50 mt-1'>
+            <div>
+                <h6>Activity 1</h6>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <button id='createframe1' class='btn bg-secondary'
+                onclick=" new Child('div2','frame2','child2.html')">Create
+                 Iframe 2</button>
+                 <button id='removeframe2' class='btn bg-secondary'>Remove
+                 Iframe </button>
+             </div>
+        </div>
+    </div>
+
+</body>
+<script src="../js/parent.js"></script>
+
+
+
+</html>
